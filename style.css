@@ -43,3 +43,18 @@ footer {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
   transition: 0.3s ease;
 }
+.admin-btn {
+  background-color: transparent;
+  border: 1px solid #777;
+  color: #777;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+.admin-btn:hover {
+  color: white;
+  border-color: white;
+  transition: 0.3s ease;
+}
