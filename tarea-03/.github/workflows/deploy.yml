@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Programacion-Web-2025
         uses: actions/checkout@v3
 
       - name: Setup Node.js
