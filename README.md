@@ -16,10 +16,9 @@ Runtime data from [PokeAPI](https://pokeapi.co/).
 ![Captura](docs/dopler.png)
 - Doppler → **Variables** (values redacted)
 ![Captura](docs/bucket.png)
-![Captura](docs/cloudefront.png)
+![Captura](docs/cloudfront.png)
 - GitHub → **Settings → Secrets and variables → Actions**
 ![Captura](docs/git.png)
-- App screenshot showing Pokémon cards
 
 ## How to run locally
 ```bash

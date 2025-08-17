@@ -1,21 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <title>Pokemones</title>
-    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galeria Pokemon de Vyncen</title>
+    <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
     <header class="app-header">
-      <h1>Pokemon</h1>
+      <h1>Galeria Pokemon de Vyncen</h1>
     </header>
 
     <main id="app">
-      <div id="status" class="status">Cargando Pokemon</div>
+      <div id="status" class="status">Cargando Pokemones...</div>
+      <button id="shuffle" class="shuffle-btn">Mostrar otros Pokemones</button>
       <section id="grid" class="grid" aria-live="polite"></section>
     </main>
 
@@ -23,6 +21,6 @@
       <small>Datos desde PokeAPI</small>
     </footer>
 
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
