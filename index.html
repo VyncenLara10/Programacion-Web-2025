@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Pokemones</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Pokemon</h1>
+    </header>
+
+    <main id="app">
+      <div id="status" class="status">Cargando Pokemon</div>
+      <section id="grid" class="grid" aria-live="polite"></section>
+    </main>
+
+    <footer class="app-footer">
+      <small>Datos desde PokeAPI</small>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
