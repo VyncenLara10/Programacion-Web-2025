@@ -1,7 +1,6 @@
 import TaskItem from "./TaskItem";
 
-function TaskList() {
-  const tasks = [];
+function TaskList({ tasks }) {
   return (
     <ul>
       {tasks.map((t) => (
