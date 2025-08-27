@@ -1,12 +1,20 @@
-# React + Vite
+# Task Manager App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Hooks used
+- **useState**: to manage the state of tasks and filter.
+- **useEffect**: to sync tasks with `localStorage` on load and whenever tasks change.
+![App Screenshot](./docs/image1.png)
+![App Screenshot](./docs/image2.png)
 
-Currently, two official plugins are available:
+## Features
+- Add tasks (default: pending)
+- Mark tasks as completed/pending
+- Delete tasks
+- Filter tasks (all / pending / completed)
+- Persistence with `localStorage`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deployment
+- CI/CD pipeline with GitHub Actions and Doppler
+- Built with Vite
+- CDN: CloudFront  
