@@ -20,6 +20,14 @@ function App() {
     setTasks([...tasks, newTask]);
   };
 
+  const toggleTask = (id) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((t) => t.id !== id));
+  };
+
   const filteredTasks = tasks.filter((t) => {
     if (filter === "pending") return !t.completed;
     if (filter === "completed") return t.completed;
@@ -35,7 +43,7 @@ function App() {
         <button onClick={() => setFilter("pending")}>Pending</button>
         <button onClick={() => setFilter("completed")}>Completed</button>
       </div>
-      <TaskList tasks={filteredTasks} />
+      <TaskList tasks={filteredTasks} onToggle={toggleTask} onDelete={deleteTask} />
     </div>
   );
 }
