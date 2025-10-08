@@ -75,6 +75,7 @@ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 docker-compose up --build
 Then visit:
-http://localhost:8000
+[Local Host](http://localhost:8000)
+
 To stop the containers:
 docker-compose down
