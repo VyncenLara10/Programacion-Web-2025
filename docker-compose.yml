@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: secret_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - secret_network
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis_viewer
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - secret_network
+
+  backend:
+    build: ./backend
+    container_name: secret_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - secret_network
+
+  frontend-react:
+    build: ./frontend-react
+    container_name: secret_frontend_react
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - secret_network
+
+  frontend-nextjs:
+    build: ./frontend-nextjs
+    container_name: secret_frontend_nextjs
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - secret_network
+
+  frontend-vue:
+    build: ./frontend-vue
+    container_name: secret_frontend_vue
+    ports:
+      - "3002:80"
+    depends_on:
+      - backend
+    networks:
+      - secret_network
+
+volumes:
+  redis_data:
+
+networks:
+  secret_network:
+    driver: bridge
