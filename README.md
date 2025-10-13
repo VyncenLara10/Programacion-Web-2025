@@ -17,7 +17,7 @@
 - Muestra el secreto revelado
 - Lee key de URL query params (`?key=xxx`)
 
-## 🚀 Cómo Usar
+## Cómo Usar
 
 ### Con Docker  
 ```bash
