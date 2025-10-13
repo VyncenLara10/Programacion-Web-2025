@@ -9,7 +9,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .serializers import SecretSerializer
 
-# Redis connection
+# Redis conexion
 redis_client = redis.Redis(
     host=settings.REDIS_HOST,
     port=settings.REDIS_PORT,
@@ -19,7 +19,7 @@ redis_client = redis.Redis(
 
 
 def generate_unique_key():
-    """Generate a unique key that doesn't exist in Redis"""
+    """Genera una sola clave unica que no exista en redis"""
     while True:
         key = secrets.token_urlsafe(16)
         if not redis_client.exists(key):
@@ -27,9 +27,6 @@ def generate_unique_key():
 
 
 class HealthCheckView(APIView):
-    """
-    Health check endpoint to verify API and Redis connectivity
-    """
     def get(self, request):
         try:
             redis_client.ping()
@@ -48,19 +45,19 @@ class HealthCheckView(APIView):
 
 class HideSecretView(APIView):
     """
-    Store a secret and return a unique key
+    guarda el secreto y devuelve la clave
     POST /api/hide/
     """
     @swagger_auto_schema(
-        operation_description="Hide a secret message and get a unique key",
+        operation_description="Escondiendo mensaje en clave unica",
         request_body=SecretSerializer,
         responses={
             201: openapi.Response(
-                description="Secret stored successfully",
+                description="Secreto oculto correctamente",
                 examples={
                     "application/json": {
                         "key": "abc123xyz",
-                        "message": "Secret stored successfully"
+                        "message": "Secreto oculto correctamente"
                     }
                 }
             ),
@@ -81,15 +78,15 @@ class HideSecretView(APIView):
         
         if not secret_text.strip():
             return Response(
-                {'error': 'Secret cannot be empty'},
+                {'error': 'Secreto no puede estar vacio'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
         try:
-            # Generate unique key
+            # Genera la clave unica 
             key = generate_unique_key()
             
-            # Store in Redis with 24 hour expiration
+            # Se almacena en redis por 24 horas si pasan chipilin
             redis_client.setex(
                 key,
                 timedelta(hours=24),
@@ -98,55 +95,55 @@ class HideSecretView(APIView):
             
             return Response({
                 'key': key,
-                'message': 'Secret stored successfully',
-                'expires_in': '24 hours'
+                'message': 'Secreto oculto correctamente',
+                'expires_in': '24 horas'
             }, status=status.HTTP_201_CREATED)
             
         except Exception as e:
             return Response(
-                {'error': f'Failed to store secret: {str(e)}'},
+                {'error': f'Fallo al revelar: {str(e)}'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
 
 class RevealSecretView(APIView):
     """
-    Reveal a secret and delete it immediately
+    REvela el secreto y lo borra de redis 
     GET /api/reveal/<key>/
     """
     @swagger_auto_schema(
         operation_description="Reveal a secret message using its key (one-time use)",
         responses={
             200: openapi.Response(
-                description="Secret revealed successfully",
+                description="Secreto revelado correctamente",
                 examples={
                     "application/json": {
                         "secret": "Your secret message",
-                        "message": "Secret revealed and deleted"
+                        "message": "secreo revelado y eliminado"
                     }
                 }
             ),
-            404: "Secret not found or already revealed",
-            500: "Internal Server Error"
+            404: "Clave no se encuentra o ya se uso",
+            500: "Error de servidor"
         }
     )
     def get(self, request, key):
         try:
-            # Get the secret
+            # Obtiene el secreto
             secret = redis_client.get(key)
             
             if secret is None:
                 return Response({
-                    'error': 'Secret not found or already revealed',
-                    'message': 'This secret may have already been viewed or never existed'
+                    'error': 'Clave no se encuentra o ya se uso',
+                    'message': 'secreto ya se vio o no existio'
                 }, status=status.HTTP_404_NOT_FOUND)
             
-            # Delete the key immediately after retrieving
+            # Borra la llave luego de ser usada
             redis_client.delete(key)
             
             return Response({
                 'secret': secret,
-                'message': 'Secret revealed and permanently deleted'
+                'message': 'Secreto revelado y eliminado permanentemente'
             }, status=status.HTTP_200_OK)
             
         except Exception as e:
@@ -157,10 +154,6 @@ class RevealSecretView(APIView):
 
 
 class StatsView(APIView):
-    """
-    Get statistics about stored secrets
-    GET /api/stats/
-    """
     @swagger_auto_schema(
         operation_description="Get current statistics about active secrets",
         responses={

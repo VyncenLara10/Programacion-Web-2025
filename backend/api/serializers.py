@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 
 class SecretSerializer(serializers.Serializer):
-    """Serializer for secret input"""
     secret = serializers.CharField(
         required=True,
         allow_blank=False,
@@ -11,14 +10,12 @@ class SecretSerializer(serializers.Serializer):
     )
     
     def validate_secret(self, value):
-        """Validate that secret is not empty after stripping whitespace"""
         if not value.strip():
             raise serializers.ValidationError("Secret cannot be empty or just whitespace")
         return value
 
 
 class SecretResponseSerializer(serializers.Serializer):
-    """Serializer for secret response"""
     key = serializers.CharField(help_text="Unique key to access the secret")
     message = serializers.CharField(help_text="Status message")
     expires_in = serializers.CharField(
@@ -28,6 +25,5 @@ class SecretResponseSerializer(serializers.Serializer):
 
 
 class RevealResponseSerializer(serializers.Serializer):
-    """Serializer for reveal response"""
     secret = serializers.CharField(help_text="The revealed secret message")
     message = serializers.CharField(help_text="Status message")
